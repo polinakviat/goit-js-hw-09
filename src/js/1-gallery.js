@@ -67,12 +67,8 @@ const images = [
 
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
-const lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-  captionPosition: 'bottom',
-  captionDelay: 250,
-});
 
+// Вхідний масив images у тебе вже є, тому відразу створюємо розмітку
 
 const galleryList = document.querySelector('.gallery');
 
@@ -83,35 +79,20 @@ const galleryMarkup = images
     <img
       class="gallery-image"
       src="${preview}"
-      data-source="${original}" alt="${description}"
+      alt="${description}"
     />
   </a>
 </li>`;
   })
   .join('');
 
+// 1. Спочатку додаємо розмітку в HTML сторінки
 galleryList.insertAdjacentHTML('beforeend', galleryMarkup);
 
-galleryList.addEventListener('click', handleGalleryClick);
-
-function handleGalleryClick(event) {
-  event.preventDefault();
-
-  const isImageClicked = event.target.nodeName === 'IMG';
-  if (!isImageClicked) {
-    return;
-  }
-
-  const largeImageUrl = event.target.dataset.source;
-  const imageAlt = event.target.alt;
-
-  console.log('Відкриваємо велике зображення:', largeImageUrl);
-
-  const instance = basicLightbox.create(`
-    <div class="modal">
-      <img src="${largeImageUrl}" alt="${imageAlt}" width="1112" height="640">
-    </div>
-  `);
-
-  instance.show();
-}
+// 2. І ТІЛЬКИ ТЕПЕР, коли картинки вже є в DOM, запускаємо SimpleLightbox
+// Він сам автоматично скасує перехід по посиланнях і відкриє модалку!
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionPosition: 'bottom',
+  captionDelay: 250,
+});
