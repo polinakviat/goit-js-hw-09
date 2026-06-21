@@ -68,8 +68,6 @@ const images = [
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-// Вхідний масив images у тебе вже є, тому відразу створюємо розмітку
-
 const galleryList = document.querySelector('.gallery');
 
 const galleryMarkup = images
@@ -86,11 +84,8 @@ const galleryMarkup = images
   })
   .join('');
 
-// 1. Спочатку додаємо розмітку в HTML сторінки
 galleryList.insertAdjacentHTML('beforeend', galleryMarkup);
 
-// 2. І ТІЛЬКИ ТЕПЕР, коли картинки вже є в DOM, запускаємо SimpleLightbox
-// Він сам автоматично скасує перехід по посиланнях і відкриє модалку!
 const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionPosition: 'bottom',
